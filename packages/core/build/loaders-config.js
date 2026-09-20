@@ -10,6 +10,10 @@ const js_loaders = [
         options: {
             cacheDirectory: true,
             rootMode: 'upward',
+            // Treat files that use CommonJS (require/module.exports) as CommonJS.
+            // Without this, Babel can parse them as ES modules and Webpack 5
+            // throws: "ES Modules may not assign module.exports or exports.*".
+            sourceType: 'unambiguous',
         },
     },
 ];
@@ -46,6 +50,7 @@ const svg_loaders = [
         options: {
             cacheDirectory: true,
             rootMode: 'upward',
+            sourceType: 'unambiguous',
         },
     },
     {
