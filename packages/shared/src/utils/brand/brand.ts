@@ -86,10 +86,10 @@ const substituteDerivDomain = (url: string): string => {
     if (!domain || domain !== getBrandDomain()) return url;
     try {
         const parsed = new URL(url);
-        parsed.hostname = parsed.hostname.replace(/deriv\\.com$/, domain);
+        parsed.hostname = parsed.hostname.replace(/deriv\.com$//, domain);
         return parsed.toString();
     } catch {
-        return url.replace(/deriv\\.com/, domain);
+        return url.replace(/deriv\.com/, domain);
     }
 };
 
@@ -109,7 +109,7 @@ export const getTrustedDomainName = (): string => {
     return domain === getBrandDomain() ? domain : 'deriv.com';
 };
 
-const CLOUDFLARE_PAGES_PATTERN = /^[a-zA-Z0-9-]+\\.startraders-dtrader\\.pages\\.dev$/;
+const CLOUDFLARE_PAGES_PATTERN = /^[a-zA-Z0-9-]+\.startraders-dtrader\.pages\.dev$/;
 export const getRedirectHostname = (): string => {
     if (typeof window === 'undefined') return '';
     const hostname = window.location.hostname;
