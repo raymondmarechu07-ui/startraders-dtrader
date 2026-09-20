@@ -86,7 +86,7 @@ const substituteDerivDomain = (url: string): string => {
     if (!domain || domain !== getBrandDomain()) return url;
     try {
         const parsed = new URL(url);
-        parsed.hostname = parsed.hostname.replace(/deriv\.com$//, domain);
+        parsed.hostname = parsed.hostname.replace(/deriv\.com$/, domain);
         return parsed.toString();
     } catch {
         return url.replace(/deriv\.com/, domain);
