@@ -16,30 +16,33 @@
     },
     "signup_url": {
         "production": "https://home.deriv.com/dashboard/signup",
-        "staging": "https://staging-home.deriv.com/dashboard/signup"
+        "staging": "https://home.deriv.com/dashboard/signup"
     },
     "deposit_url": {
-        "staging": "https://staging.startraders-dtrader.pages.dev/transfer",
+        "staging": "https://startraders-dtrader.pages.dev/transfer",
         "production": "https://startraders-dtrader.pages.dev/transfer"
     },
     "auth": {
-        "staging": "https://staging-auth.deriv.com",
+        "staging": "https://auth.deriv.com",
         "production": "https://auth.deriv.com",
-        "oauth_scopes": ["trade", "account_manage"],
-        "oauth_redirect_uri_staging": "https://staging.startraders-dtrader.pages.dev",
+        "oauth_scopes": [
+            "trade",
+            "account_manage"
+        ],
+        "oauth_redirect_uri_staging": "https://startraders-dtrader.pages.dev",
         "oauth_redirect_uri_production": "https://startraders-dtrader.pages.dev",
         "oauth_app_id": ""
     },
     "derivws": {
-        "staging": "https://staging-api.derivws.com",
+        "staging": "https://api.derivws.com",
         "production": "https://api.derivws.com"
     },
     "api_core": {
-        "staging": "staging-api-core.deriv.com",
+        "staging": "api-core.deriv.com",
         "production": "api-core.deriv.com"
     },
     "api": {
-        "staging": "staging-api.deriv.com",
+        "staging": "api.deriv.com",
         "production": "api.deriv.com"
     },
     "app_id": {
