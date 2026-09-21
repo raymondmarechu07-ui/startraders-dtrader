@@ -1,8 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" width="200" height="48" role="img" aria-label="Brand Logo">
-  <rect width="200" height="48" fill="none"/>
-  <!-- Replace this file with your brand logo (dark theme) -->
-  <!-- Recommended: 200x48px, transparent background, optimized for dark backgrounds -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 48" width="240" height="48" role="img" aria-label="Star Traders">
+  <rect width="240" height="48" fill="none"/>
   <circle cx="24" cy="24" r="18" fill="#118e1c"/>
-  <text x="24" y="29" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">TP</text>
-  <text x="52" y="32" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#ffffff">Trading Platform</text>
+  <text x="24" y="29" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">ST</text>
+  <text x="52" y="32" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#ffffff">Star Traders</text>
 </svg>
