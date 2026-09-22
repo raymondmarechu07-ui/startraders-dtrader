@@ -5,6 +5,7 @@ import { createRoot } from 'react-dom/client';
 
 import App from 'App/app.jsx';
 import initStore from 'App/initStore';
+import { consumeStarTradersSSO } from 'Services/oauth';
 // eslint-disable-next-line
 import registerServiceWorker from 'Utils/PWA';
 
@@ -18,6 +19,11 @@ if (
 }
 
 const initApp = async () => {
+    // StarTraders dashboard can hand the already-authenticated Deriv session
+    // to this DTrader workspace. Consume it BEFORE initStore so the normal
+    // account/OTP initialization starts authenticated on the first boot.
+    await consumeStarTradersSSO();
+
     // For simplified authentication, we don't need to pass accounts to initStore
     // The authentication will be handled by temp-auth.js and client-store.js
     // initStore is now async to perform whoami check before WebSocket connection
