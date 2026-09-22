@@ -153,6 +153,59 @@ export const clearTokens = (): void => {
 };
 
 // ---------------------------------------------------------------------------
+// StarTraders SSO handoff
+// ---------------------------------------------------------------------------
+
+const STARTRADERS_HANDOFF_URL = 'https://startraders-xn1z.onrender.com/api/auth/handoff';
+
+export const consumeStarTradersSSO = async (): Promise<boolean> => {
+    const url = new URL(window.location.href);
+    const handoff_code = url.searchParams.get('st_sso');
+
+    if (!handoff_code) return false;
+
+    try {
+        const response = await fetch(
+            `${STARTRADERS_HANDOFF_URL}?code=${encodeURIComponent(handoff_code)}`,
+            {
+                method: 'GET',
+                cache: 'no-store',
+                credentials: 'omit',
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`StarTraders SSO handoff failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (!data?.access_token) {
+            throw new Error('StarTraders SSO handoff returned no access token.');
+        }
+
+        const expires_in = data.expires_at
+            ? Math.max(60, Math.floor((Number(data.expires_at) - Date.now()) / 1000))
+            : undefined;
+
+        storeTokens(data.access_token, data.refresh_token, expires_in);
+
+        url.searchParams.delete('st_sso');
+        window.history.replaceState({}, document.title, url.toString());
+
+        return true;
+    } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error('[StarTraders SSO] Failed:', error);
+
+        url.searchParams.delete('st_sso');
+        window.history.replaceState({}, document.title, url.toString());
+
+        return false;
+    }
+};
+
+// ---------------------------------------------------------------------------
 // Token refresh
 // ---------------------------------------------------------------------------
 
