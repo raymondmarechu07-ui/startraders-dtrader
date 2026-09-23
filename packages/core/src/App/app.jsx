@@ -24,7 +24,7 @@ const App = ({ root_store }) => {
     });
     const l = window.location;
     const base = l.pathname.split('/')[1];
-    const has_base = /^\/(br_)/.test(l.pathname);
+    const has_base = base === 'manual-trader' || /^br_/.test(base);
     const { preferred_language } = root_store.client;
     const { is_dark_mode_on } = root_store.ui;
     const is_dark_mode = is_dark_mode_on || JSON.parse(localStorage.getItem('ui_store'))?.is_dark_mode_on;
@@ -64,7 +64,7 @@ const App = ({ root_store }) => {
                 // Token is now in sessionStorage. Reload to /  so initStore
                 // picks it up on fresh boot — avoids the race where onClientInit
                 // already ran before the token exchange completed.
-                window.location.replace('/');
+                window.location.replace('/manual-trader/');
             })
             .catch(err => {
                 // eslint-disable-next-line no-console
