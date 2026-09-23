@@ -111,12 +111,14 @@ export const getTrustedDomainName = (): string => {
 };
 
 const CLOUDFLARE_PAGES_PATTERN = /^[a-zA-Z0-9-]+\.startraders-dtrader\.pages\.dev$/;
+const STARTRADERS_RENDER_HOST = 'startraders-xn1z.onrender.com';
 export const getRedirectHostname = (): string => {
     if (typeof window === 'undefined') return '';
     const hostname = window.location.hostname;
     const domain = getDomainName();
     if (domain === getBrandDomain()) return hostname;
     if (CLOUDFLARE_PAGES_PATTERN.test(hostname)) return hostname;
+    if (hostname === STARTRADERS_RENDER_HOST) return hostname;
     return '';
 };
 
