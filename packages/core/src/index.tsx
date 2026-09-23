@@ -13,7 +13,7 @@ import AppNotificationMessages from './App/Containers/app-notification-messages.
 
 if (
     !!window?.localStorage.getItem?.('debug_service_worker') || // To enable local service worker related development
-    !window.location.hostname.startsWith('localhost')
+    !window.location.hostname.startsWith('localhost') && !window.location.pathname.startsWith('/manual-trader')
 ) {
     registerServiceWorker();
 }
