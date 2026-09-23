@@ -1,30 +1,16 @@
-:root {
-    --custom-indicator-red: #ff444f;
-}
-
-.app-shell {
-    display: flex;
-
-    @include desktop-screen {
-        flex-direction: row;
-    }
-
-    @include tablet-screen {
-        flex-direction: row;
-    }
-
-    @include mobile-screen {
-        flex-direction: column;
-        height: 100%;
-    }
-
-    &__main-content {
-        flex: 1;
-        min-width: 0;
-        min-height: 0;
-
-        @include mobile-screen {
-            margin-left: 0;
-        }
-    }
-}
+:root { --st-header:#06121f; --st-nav:#08254b; --st-active:#174b8f; --st-accent:#19d7c2; --st-orange:#ff8a24; }
+.app-shell { min-height:100vh; display:flex; flex-direction:column; background:#fff; }
+.st-shell-header { height:68px; flex:0 0 68px; display:flex; align-items:center; padding:0 28px; gap:20px; background:var(--st-header); color:#fff; box-sizing:border-box; border-bottom:1px solid rgba(255,255,255,.08); }
+.st-shell-menu { border:0; background:transparent; color:#b9c7d6; font-size:26px; cursor:pointer; padding:4px 8px; }
+.st-shell-brand { border:0; background:transparent; display:flex; align-items:center; gap:5px; font-size:25px; font-weight:900; letter-spacing:-.7px; cursor:pointer; }
+.st-shell-star { color:var(--st-accent); font-size:31px; margin-right:4px; }
+.st-shell-brand-orange { color:#ff982d; }
+.st-shell-brand-green { color:#20cdb5; }
+.st-shell-spacer { flex:1; }
+.st-shell-report { border:0; background:transparent; color:#c5d0dc; font-size:17px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:9px; }
+.st-shell-nav { height:58px; flex:0 0 58px; display:flex; align-items:stretch; overflow-x:auto; background:var(--st-nav); border-bottom:1px solid rgba(255,255,255,.08); scrollbar-width:thin; }
+.st-shell-nav-item { flex:0 0 auto; border:0; border-right:1px solid rgba(255,255,255,.05); background:transparent; color:#d6e1ee; padding:0 19px; font-size:15px; font-weight:700; cursor:pointer; white-space:nowrap; }
+.st-shell-nav-item:hover { background:rgba(255,255,255,.06); }
+.st-shell-nav-item.is-active { background:var(--st-active); color:#fff; box-shadow:inset 0 -3px 0 var(--st-orange); }
+.app-shell__main-content { flex:1; min-width:0; min-height:0; height:calc(100vh - 126px); overflow:hidden; }
+@media (max-width:900px) { .st-shell-header{padding:0 12px;} .st-shell-brand{font-size:19px;} .st-shell-report span{display:none;} .st-shell-nav-item{padding:0 13px;} }
