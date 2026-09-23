@@ -3,28 +3,138 @@
 }
 
 .app-shell {
+    min-height: 100vh;
     display: flex;
+    flex-direction: column;
+    background: var(--color-page-background);
 
-    @include desktop-screen {
-        flex-direction: row;
-    }
-
-    @include tablet-screen {
-        flex-direction: row;
-    }
-
-    @include mobile-screen {
-        flex-direction: column;
-        height: 100%;
-    }
-
-    &__main-content {
-        flex: 1;
-        min-width: 0;
-        min-height: 0;
-
-        @include mobile-screen {
-            margin-left: 0;
+    &--startraders {
+        .app-shell__body {
+            display: flex;
+            flex: 1;
+            min-height: 0;
         }
+
+        .app-shell__body > .sidebar {
+            display: none;
+        }
+
+        .app-shell__main-content {
+            flex: 1;
+            min-width: 0;
+            min-height: 0;
+            width: 100%;
+        }
+    }
+}
+
+.startraders-shell-header {
+    height: 58px;
+    min-height: 58px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 0 18px;
+    box-sizing: border-box;
+    background: #071015;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    z-index: 20;
+}
+
+.startraders-shell-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 190px;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+
+    img {
+        width: 34px;
+        height: 34px;
+        object-fit: contain;
+    }
+}
+
+.startraders-shell-nav {
+    display: flex;
+    align-items: stretch;
+    height: 100%;
+    gap: 2px;
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.startraders-shell-nav__item {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 15px;
+    color: #b8c3ca;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+
+    &:hover {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.04);
+    }
+
+    &.is-active {
+        color: #ffffff;
+        background: linear-gradient(180deg, rgba(0, 245, 160, 0.18), rgba(0, 198, 255, 0.08));
+        border-bottom-color: #00c6ff;
+    }
+}
+
+.startraders-shell-status {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #8fa0a9;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+}
+
+.startraders-shell-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #00f5a0;
+    box-shadow: 0 0 10px rgba(0, 245, 160, 0.7);
+}
+
+@media (max-width: 760px) {
+    .startraders-shell-header {
+        gap: 8px;
+        padding: 0 10px;
+    }
+
+    .startraders-shell-brand {
+        min-width: auto;
+
+        span {
+            display: none;
+        }
+    }
+
+    .startraders-shell-nav__item {
+        padding: 0 10px;
+        font-size: 12px;
+    }
+
+    .startraders-shell-status {
+        display: none;
     }
 }
