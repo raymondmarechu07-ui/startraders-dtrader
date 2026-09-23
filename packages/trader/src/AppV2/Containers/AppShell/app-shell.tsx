@@ -1,35 +1,44 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-
-import { routes } from '@deriv/shared';
-import { useStore } from '@deriv/stores';
 import { useDevice } from '@deriv-com/ui';
-
-import Sidebar from 'AppV2/Components/Layout/Sidebar/sidebar';
-
 import Router from '../../Routes/router';
-
 import './app-shell.scss';
 
+const navItems = [
+    ['Dashboard', '/dashboard'],
+    ['Bot Builder', '/bot-builder'],
+    ['Free Bots', '/free-bots'],
+    ['Signals', '/signals'],
+    ['Speedbot', '/speedbot'],
+    ['AI Software', '/ai-software'],
+    ['Risk Calculator', '/risk-calculator'],
+    ['Trade Academy', '/trade-academy'],
+    ['Manual Trader', '/manual-trader'],
+];
+
 const AppShell = observer(() => {
-    const { ui } = useStore();
-    const { active_sidebar_flyout } = ui;
     const { isMobile } = useDevice();
-    const location = useLocation();
-
-    React.useEffect(() => {
-        if (active_sidebar_flyout && location.pathname !== routes.index) {
-            ui.closeSidebarFlyout();
-        }
-    }, [location.pathname]);
-
+    const go = href => { window.location.href = href; };
     return (
         <div className='app-shell'>
-            {!isMobile && <Sidebar />}
-            <div className='app-shell__main-content'>
+            <header className='st-shell-header'>
+                <button className='st-shell-menu' aria-label='Open menu' onClick={() => window.location.href = '/dashboard'}>☰</button>
+                <button className='st-shell-brand' onClick={() => window.location.href = '/dashboard'}>
+                    <span className='st-shell-star'>★</span>
+                    <span className='st-shell-brand-orange'>STAR</span>
+                    <span className='st-shell-brand-green'>TRADERS</span>
+                </button>
+                <div className='st-shell-spacer' />
+                <button className='st-shell-report' onClick={() => window.location.href = '/dashboard'}>▤ <span>Reports</span></button>
+            </header>
+            <nav className='st-shell-nav' aria-label='Star Traders'>
+                {navItems.map(([label, href]) => (
+                    <button key={label} className={'st-shell-nav-item ' + (href === '/manual-trader' ? 'is-active' : '')} onClick={() => go(href)}>{label}</button>
+                ))}
+            </nav>
+            <main className={'app-shell__main-content ' + (isMobile ? 'is-mobile' : '')}>
                 <Router />
-            </div>
+            </main>
         </div>
     );
 });
