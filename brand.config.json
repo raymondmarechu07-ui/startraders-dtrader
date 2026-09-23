@@ -4,14 +4,14 @@
     "brand_logo_dark": "brand/platform-logo.svg",
     "brand_domain": "startraders.com",
     "brand_hostname": {
-        "staging": "staging.startraders-dtrader.pages.dev",
-        "production": "startraders-dtrader.pages.dev"
+        "staging": "startraders-xn1z.onrender.com",
+        "production": "startraders-xn1z.onrender.com"
     },
     "platform": {
         "name": "Star Traders",
         "description": "A professional real-time trading experience powered by Deriv.",
         "logo": "brand/platform-logo.svg",
-        "home_url": "https://startraders-dtrader.pages.dev",
+        "home_url": "https://startraders-xn1z.onrender.com/dashboard",
         "help_centre_url": "https://trade.deriv.com/help-centre"
     },
     "signup_url": {
@@ -19,8 +19,8 @@
         "staging": "https://home.deriv.com/dashboard/signup"
     },
     "deposit_url": {
-        "staging": "https://startraders-dtrader.pages.dev/transfer",
-        "production": "https://startraders-dtrader.pages.dev/transfer"
+        "staging": "https://startraders-xn1z.onrender.com/dashboard",
+        "production": "https://startraders-xn1z.onrender.com/dashboard"
     },
     "auth": {
         "staging": "https://auth.deriv.com",
@@ -29,8 +29,8 @@
             "trade",
             "account_manage"
         ],
-        "oauth_redirect_uri_staging": "https://startraders-dtrader.pages.dev",
-        "oauth_redirect_uri_production": "https://startraders-dtrader.pages.dev",
+        "oauth_redirect_uri_staging": "https://startraders-xn1z.onrender.com",
+        "oauth_redirect_uri_production": "https://startraders-xn1z.onrender.com",
         "oauth_app_id": ""
     },
     "derivws": {
