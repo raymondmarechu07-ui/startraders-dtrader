@@ -29,8 +29,8 @@
 }
 
 .startraders-shell-header {
-    height: 58px;
-    min-height: 58px;
+    height: 50px;
+    min-height: 50px;
     display: flex;
     align-items: center;
     gap: 18px;
@@ -45,11 +45,11 @@
     display: inline-flex;
     align-items: center;
     gap: 9px;
-    min-width: 190px;
+    min-width: 205px;
     color: #ffffff;
     text-decoration: none;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 14px;
 
     img {
         width: 34px;
@@ -74,7 +74,8 @@
 .startraders-shell-nav__item {
     display: inline-flex;
     align-items: center;
-    padding: 0 15px;
+    gap: 6px;
+    padding: 0 12px;
     color: #b8c3ca;
     text-decoration: none;
     font-size: 13px;
@@ -82,6 +83,12 @@
     white-space: nowrap;
     border-bottom: 3px solid transparent;
     transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+
+    .startraders-shell-nav__icon {
+        font-size: 14px;
+        line-height: 1;
+        opacity: 0.9;
+    }
 
     &:hover {
         color: #ffffff;
