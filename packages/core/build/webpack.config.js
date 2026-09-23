@@ -3,7 +3,12 @@ const { ALIASES, IS_RELEASE, MINIMIZERS, plugins, rules } = require('./constants
 const { openChromeBasedOnPlatform } = require('./helpers');
 
 module.exports = function (env) {
-    const base = env && env.base && env.base !== true ? `/${env.base}/` : '/';
+    const configuredBase = process.env.DTRADER_BASE_PATH || '';
+    const base = env && env.base && env.base !== true
+        ? `/${env.base}/`
+        : configuredBase
+          ? `/${configuredBase.replace(/^\/+|\/+$/g, '')}/`
+          : '/';
     const sub_path = env && env.open && env.open !== true ? env.open : '';
 
     return {
