@@ -156,21 +156,37 @@ export const clearTokens = (): void => {
 // StarTraders SSO handoff
 // ---------------------------------------------------------------------------
 
-const STARTRADERS_HANDOFF_URL = 'https://startraders-xn1z.onrender.com/api/auth/handoff';
+const STARTRADERS_HANDOFF_URL = '/api/auth/handoff';
 
 export const consumeStarTradersSSO = async (): Promise<boolean> => {
     const url = new URL(window.location.href);
-    const handoff_code = url.searchParams.get('st_sso');
-
-    if (!handoff_code) return false;
+    let handoff_code = url.searchParams.get('st_sso');
 
     try {
+        // The Manual Trader is now served directly by the StarTraders Render app.
+        // When the parent StarTraders session already exists, obtain a short-lived
+        // one-time handoff code from the same origin and consume it immediately.
+        if (!handoff_code) {
+            const issue = await fetch(STARTRADERS_HANDOFF_URL, {
+                method: 'POST',
+                cache: 'no-store',
+                credentials: 'same-origin',
+            });
+
+            if (!issue.ok) return false;
+
+            const issued = await issue.json();
+            handoff_code = issued?.code ?? null;
+        }
+
+        if (!handoff_code) return false;
+
         const response = await fetch(
             `${STARTRADERS_HANDOFF_URL}?code=${encodeURIComponent(handoff_code)}`,
             {
                 method: 'GET',
                 cache: 'no-store',
-                credentials: 'omit',
+                credentials: 'same-origin',
             }
         );
 
