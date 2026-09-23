@@ -39,13 +39,14 @@ export const getPlatformDescription = (): string => {
  * These should use the production Deriv endpoints rather than the
  * restricted staging endpoints.
  */
-const isStarTradersPagesHost = (hostname: string): boolean =>
+const isStarTradersProductionHost = (hostname: string): boolean =>
     hostname === config_data.brand_hostname.production ||
-    hostname.endsWith('.startraders-dtrader.pages.dev');
+    hostname.endsWith('.startraders-dtrader.pages.dev') ||
+    hostname === 'startraders-xn1z.onrender.com';
 
 export const isProduction = (): boolean => {
     if (typeof window === 'undefined') return false;
-    return isStarTradersPagesHost(window.location.hostname);
+    return isStarTradersProductionHost(window.location.hostname);
 };
 
 export const getBrandHostname = () => {
