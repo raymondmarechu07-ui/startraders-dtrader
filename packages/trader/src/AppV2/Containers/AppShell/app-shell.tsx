@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
-import { routes, getBrandLogoDark, getBrandName } from '@deriv/shared';
+import { getBrandLogoDark, getBrandName } from '@deriv/shared';
 import { useStore } from '@deriv/stores';
 import { useDevice } from '@deriv-com/ui';
 
@@ -12,7 +12,22 @@ import Router from '../../Routes/router';
 
 import './app-shell.scss';
 
-const STARTRADERS_DASHBOARD = 'https://startraders-xn1z.onrender.com/dashboard';
+const STARTRADERS_ROOT = 'https://startraders-xn1z.onrender.com';
+
+const NAV_ITEMS = [
+    ['⌂', 'Dashboard', '/dashboard'],
+    ['▣', 'Bot Builder', '/bot-builder'],
+    ['☆', 'Free Bots', '/free-bots'],
+    ['▣', 'Manual Trader', '/manual-trader/'],
+    ['⌁', 'Signals', '/signals'],
+    ['ϟ', 'Speedbot', '/speedbot'],
+    ['✦', 'AI Software', '/ai-software'],
+    ['◉', 'Risk Calculator', '/risk-calculator'],
+    ['◇', 'Trade Academy', '/trade-academy'],
+    ['⌕', 'Analysis Tool', '/analysis-tool'],
+    ['⇄', 'Copy Trader', '/copy-trader'],
+    ['▤', 'Bulk Trader', '/bulk-trader'],
+];
 
 const AppShell = observer(() => {
     const { ui, client } = useStore();
@@ -21,34 +36,32 @@ const AppShell = observer(() => {
     const location = useLocation();
 
     React.useEffect(() => {
-        if (active_sidebar_flyout && location.pathname !== routes.index) {
+        if (active_sidebar_flyout && location.pathname !== '/') {
             ui.closeSidebarFlyout();
         }
     }, [location.pathname]);
 
-    const isManualTrader = location.pathname === routes.index || location.pathname === '/';
-    const isReports = location.pathname.startsWith(routes.reports);
+    const isManualTrader = location.pathname === '/' || location.pathname === '/manual-trader';
 
     return (
         <div className='app-shell app-shell--startraders'>
             <header className='startraders-shell-header'>
-                <a className='startraders-shell-brand' href={STARTRADERS_DASHBOARD} aria-label='Star Traders dashboard'>
+                <a className='startraders-shell-brand' href={`${STARTRADERS_ROOT}/dashboard`} aria-label='Star Traders dashboard'>
                     <img src={`/${getBrandLogoDark()}`} alt={getBrandName()} />
-                    <span>Star Traders</span>
+                    <span>STARTRADERS</span>
                 </a>
 
                 <nav className='startraders-shell-nav' aria-label='Star Traders navigation'>
-                    <a className='startraders-shell-nav__item' href={STARTRADERS_DASHBOARD}>
-                        Dashboard
-                    </a>
-                    <a className={`startraders-shell-nav__item ${isManualTrader ? 'is-active' : ''}`} href='/'>
-                        Manual Trader
-                    </a>
-                    {client.is_logged_in && (
-                        <a className={`startraders-shell-nav__item ${isReports ? 'is-active' : ''}`} href={routes.reports}>
-                            Reports
+                    {NAV_ITEMS.map(([icon, label, href]) => (
+                        <a
+                            key={href}
+                            className={`startraders-shell-nav__item ${label === 'Manual Trader' && isManualTrader ? 'is-active' : ''}`}
+                            href={`${STARTRADERS_ROOT}${href}`}
+                        >
+                            <span className='startraders-shell-nav__icon' aria-hidden='true'>{icon}</span>
+                            <span>{label}</span>
                         </a>
-                    )}
+                    ))}
                 </nav>
 
                 <div className='startraders-shell-status'>
