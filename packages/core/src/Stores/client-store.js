@@ -399,7 +399,7 @@ export default class ClientStore extends BaseStore {
             }
 
             const language = this.current_account?.preferred_language || getInitialLanguage();
-            const stored_language_without_double_quotes = LocalStore.get(LANGUAGE_KEY).replace(/"/g, '');
+            const stored_language_without_double_quotes = String(LocalStore.get(LANGUAGE_KEY) || '').replace(/"/g, '');
             if (stored_language_without_double_quotes && language !== stored_language_without_double_quotes) {
                 window.history.replaceState({}, document.title, urlForLanguage(language));
                 await this.root_store.common.changeSelectedLanguage(language);
