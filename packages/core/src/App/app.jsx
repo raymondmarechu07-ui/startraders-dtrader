@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { APIProvider, useMobileBridge } from '@deriv/api';
@@ -25,6 +25,7 @@ const App = ({ root_store }) => {
     const l = window.location;
     const base = l.pathname.split('/')[1];
     const has_base = base === 'manual-trader-engine' || base === 'manual-trader' || /^br_/.test(base);
+    const is_embedded = !!window.__STARTRADERS_EMBEDDED__;
     const { preferred_language } = root_store.client;
     const { is_dark_mode_on } = root_store.ui;
     const is_dark_mode = is_dark_mode_on || JSON.parse(localStorage.getItem('ui_store'))?.is_dark_mode_on;
@@ -64,7 +65,8 @@ const App = ({ root_store }) => {
                 // Token is now in sessionStorage. Reload to /  so initStore
                 // picks it up on fresh boot — avoids the race where onClientInit
                 // already ran before the token exchange completed.
-                window.location.replace('/manual-trader/');
+                if (window.__STARTRADERS_EMBEDDED__) window.location.reload();
+                else window.location.replace('/manual-trader/');
             })
             .catch(err => {
                 // eslint-disable-next-line no-console
@@ -128,21 +130,24 @@ const App = ({ root_store }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return (
-        <Router basename={has_base ? `/${base}` : null}>
-            <StoreProvider store={root_store}>
-                <BreakpointProvider>
-                    <APIProvider>
-                        <TranslationProvider defaultLang={language} i18nInstance={i18nInstance}>
-                            {/* This is required as translation provider uses suspense to reload language */}
-                            <React.Suspense fallback={<Loading />}>
-                                <AppContent passthrough={platform_passthrough} />
-                            </React.Suspense>
-                        </TranslationProvider>
-                    </APIProvider>
-                </BreakpointProvider>
-            </StoreProvider>
-        </Router>
+    const appContent = (
+        <StoreProvider store={root_store}>
+            <BreakpointProvider>
+                <APIProvider>
+                    <TranslationProvider defaultLang={language} i18nInstance={i18nInstance}>
+                        <React.Suspense fallback={<Loading />}>
+                            <AppContent passthrough={platform_passthrough} />
+                        </React.Suspense>
+                    </TranslationProvider>
+                </APIProvider>
+            </BreakpointProvider>
+        </StoreProvider>
+    );
+
+    return is_embedded ? (
+        <MemoryRouter initialEntries={['/']}>{appContent}</MemoryRouter>
+    ) : (
+        <BrowserRouter basename={has_base ? `/${base}` : null}>{appContent}</BrowserRouter>
     );
 };
 
