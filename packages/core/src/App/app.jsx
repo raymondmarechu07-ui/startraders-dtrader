@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, MemoryRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { APIProvider, useMobileBridge } from '@deriv/api';
@@ -144,11 +144,12 @@ const App = ({ root_store }) => {
         </StoreProvider>
     );
 
-    return is_embedded ? (
-        <MemoryRouter initialEntries={['/']}>{appContent}</MemoryRouter>
-    ) : (
-        <BrowserRouter basename={has_base ? `/${base}` : null}>{appContent}</BrowserRouter>
-    );
+    // Keep DTrader on the real /manual-trader browser history even when it is
+    // embedded. DTrader internally relies on the browser history object for
+    // language URLs and route history; MemoryRouter breaks that contract.
+    const router_base = is_embedded ? '/manual-trader' : has_base ? `/${base}` : null;
+
+    return <BrowserRouter basename={router_base}>{appContent}</BrowserRouter>;
 };
 
 App.propTypes = {
