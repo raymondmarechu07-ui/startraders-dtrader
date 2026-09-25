@@ -38,6 +38,7 @@ const initApp = async () => {
 
 if (typeof window !== 'undefined' && window.__STARTRADERS_EMBEDDED__) {
     document.documentElement.classList.add('startraders-dtrader-embedded');
+    window.__STARTRADERS_DTRADER_MOUNT__ = initApp;
+} else {
+    initApp();
 }
-
-initApp();
