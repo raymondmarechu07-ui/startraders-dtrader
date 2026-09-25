@@ -6,7 +6,7 @@ module.exports = function (env) {
     const base = env && env.base && env.base !== true
         ? `/${env.base}/`
         : configuredBase
-          ? `/${configuredBase.replace(/^\\/+|\\/+$/g, '')}/`
+          ? `/${configuredBase.replace(/^\/+|\/+$/g, '')}/`
           : '/';
 
     return {
