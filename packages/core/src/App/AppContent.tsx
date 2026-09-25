@@ -20,11 +20,12 @@ const AppContent: React.FC<{ passthrough: any }> = observer(({ passthrough }) =>
     const store = useStore();
     const { current_language } = store.common;
     const { is_dark_mode_on } = store.ui;
-
     const { isMobile } = useDevice();
-
     const { switchLanguage } = useTranslations();
     const { isBridgeAvailable, sendBridgeEvent } = useMobileBridge();
+
+    const is_startraders_embedded =
+        typeof window !== 'undefined' && !!(window as any).__STARTRADERS_EMBEDDED__;
 
     const html = document.documentElement;
 
@@ -34,7 +35,6 @@ const AppContent: React.FC<{ passthrough: any }> = observer(({ passthrough }) =>
         html?.setAttribute('dir', current_language.toLowerCase() === 'ar' ? 'rtl' : 'ltr');
     }, [current_language, switchLanguage, html]);
 
-    // Send trading:config event when language or theme changes
     React.useEffect(() => {
         if (isBridgeAvailable) {
             const language = current_language || getInitialLanguage();
@@ -47,14 +47,14 @@ const AppContent: React.FC<{ passthrough: any }> = observer(({ passthrough }) =>
 
     return (
         <ThemeProvider theme={is_dark_mode_on ? 'dark' : 'light'}>
-            <LandscapeBlocker />
-            {isMobile && <Header />}
+            {!is_startraders_embedded && <LandscapeBlocker />}
+            {isMobile && !is_startraders_embedded && <Header />}
             <ErrorBoundary root_store={store}>
                 <AppContents>
                     <Routes {...({ passthrough } as any)} />
                 </AppContents>
             </ErrorBoundary>
-            {isMobile && <BottomNav />}
+            {isMobile && !is_startraders_embedded && <BottomNav />}
             <ErrorBoundary root_store={store}>
                 <AppModals />
             </ErrorBoundary>
