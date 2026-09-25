@@ -18,7 +18,7 @@ const navItems = [
 
 const AppShell = observer(() => {
     const { isMobile } = useDevice();
-    const go = href => { window.location.href = href; };
+    const go = (href: string) => { window.location.href = href; };
     return (
         <div className='app-shell'>
             <header className='st-shell-header'>
