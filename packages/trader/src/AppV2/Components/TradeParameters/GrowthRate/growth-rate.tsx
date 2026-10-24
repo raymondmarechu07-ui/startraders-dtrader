@@ -118,8 +118,8 @@ const GrowthRate = observer(({ is_minimized }: TTradeParametersProps) => {
                             {rate.percentage}%
                         </button>
                     ))}
-                    <GrowthRateDesktop is_minimized={is_minimized} />
                 </div>
+                <GrowthRateDesktop is_minimized={is_minimized} />
             </div>
         );
     }
