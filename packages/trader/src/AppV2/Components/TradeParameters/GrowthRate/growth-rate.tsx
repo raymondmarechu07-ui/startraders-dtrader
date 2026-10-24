@@ -92,9 +92,36 @@ const GrowthRate = observer(({ is_minimized }: TTradeParametersProps) => {
                 <Skeleton />
             </div>
         );
-    // Render desktop version with InputPopover for non-mobile devices
+    // Desktop quick picks mirror the DBTraders accumulator panel while keeping
+    // the original proposal/purchase flow and full growth-rate picker intact.
     if (!is_mobile) {
-        return <GrowthRateDesktop is_minimized={is_minimized} />;
+        const quick_rates = accumulator_range_list
+            .map(rate => ({ value: rate, percentage: getGrowthRatePercentage(rate) }))
+            .filter(rate => rate.percentage >= 1 && rate.percentage <= 5)
+            .sort((a, b) => a.percentage - b.percentage);
+
+        return (
+            <div className={clsx('st-growth-rate-control', classname)}>
+                <div className='st-growth-rate-control__label'>
+                    <Localize i18n_default_text='Growth rate' />
+                </div>
+                <div className='st-growth-rate-control__quick-picks' role='group' aria-label='Growth rate'>
+                    {quick_rates.map(rate => (
+                        <button
+                            key={rate.value}
+                            type='button'
+                            className={clsx('st-growth-rate-control__quick-pick', growth_rate === rate.value && 'is-active')}
+                            aria-pressed={growth_rate === rate.value}
+                            disabled={has_open_accu_contract || is_market_closed}
+                            onClick={() => handleGrowthRateChange(rate.value)}
+                        >
+                            {rate.percentage}%
+                        </button>
+                    ))}
+                    <GrowthRateDesktop is_minimized={is_minimized} />
+                </div>
+            </div>
+        );
     }
 
     // Render mobile version with ActionSheet (unchanged)
