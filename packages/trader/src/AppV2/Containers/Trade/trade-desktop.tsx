@@ -8,7 +8,6 @@ import { getSymbolDisplayName } from '@deriv/shared';
 import { useStore } from '@deriv/stores';
 import { Loader } from '@deriv-com/ui';
 
-import AccountHeader from 'AppV2/Components/AccountHeader';
 import AccumulatorStats from 'AppV2/Components/AccumulatorStats';
 import ClosedMarketMessage from 'AppV2/Components/ClosedMarketMessage';
 import Guide from 'AppV2/Components/Guide';
@@ -30,14 +29,12 @@ import { useTraderStore } from 'Stores/useTraderStores';
 
 import { TradeChart } from '../Chart';
 
-import TradeTypes from './trade-types';
-
 const TradeDesktop = observer(() => {
     const chart_ref = React.useRef<HTMLDivElement>(null);
     const {
         client,
         common: { current_language, network_status },
-        ui: { is_dark_mode_on, active_sidebar_flyout },
+        ui: { active_sidebar_flyout },
     } = useStore();
     const { is_logged_in } = client;
     const {
@@ -47,7 +44,6 @@ const TradeDesktop = observer(() => {
         is_multiplier,
         is_chart_loading,
         is_market_closed,
-        onChange,
         onMount,
         onUnmount,
         proposal_info,
@@ -89,26 +85,6 @@ const TradeDesktop = observer(() => {
         [active_symbols]
     );
 
-    const onTradeTypeSelect = React.useCallback(
-        (
-            e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
-            source?: string,
-            _trade_type_count?: number,
-            tab?: 'all' | 'most_traded'
-        ) => {
-            const selected_trade_type = trade_types.find(
-                ({ text }) => text === (e.target as HTMLButtonElement).textContent
-            );
-            onChange({
-                target: {
-                    name: 'contract_type',
-                    value: selected_trade_type?.value,
-                },
-            });
-        },
-        [trade_types, onChange]
-    );
-
     React.useEffect(() => {
         onMount();
         return onUnmount;
@@ -125,15 +101,6 @@ const TradeDesktop = observer(() => {
                         'trade--flyout-open': active_sidebar_flyout !== null,
                     })}
                 >
-                    <div className='trade__header'>
-                        <TradeTypes
-                            contract_type={contract_type}
-                            onTradeTypeSelect={onTradeTypeSelect}
-                            trade_types={trade_types}
-                            is_dark_mode_on={is_dark_mode_on}
-                        />
-                        <AccountHeader />
-                    </div>
                     {/* Commented out to use chart's native market selector instead */}
                     {/* <MarketSelector /> */}
                     <div className='trade__grid'>
