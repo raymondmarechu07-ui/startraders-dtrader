@@ -15,7 +15,6 @@ import { useTraderStore } from 'Stores/useTraderStores';
 
 import { TTradeParametersProps } from '../trade-parameters';
 
-import GrowthRateDesktop from './growth-rate-desktop';
 import GrowthRatePicker from './growth-rate-picker';
 
 const GrowthRate = observer(({ is_minimized }: TTradeParametersProps) => {
@@ -119,7 +118,6 @@ const GrowthRate = observer(({ is_minimized }: TTradeParametersProps) => {
                         </button>
                     ))}
                 </div>
-                <GrowthRateDesktop is_minimized={is_minimized} />
             </div>
         );
     }
